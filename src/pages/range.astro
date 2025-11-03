@@ -1,0 +1,224 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<script>
+  import { MuRange } from "@/web-components/mu-range";
+  (
+    document.querySelector("mu-range.dynamic-range") as MuRange
+  )?.addEventListener("mu-range-empty-area", (e) => {
+    const thumb = document.createElement("mu-range-thumb");
+    thumb.value = e.detail.values.value;
+    thumb.innerHTML = `<mu-range-thumb-value reversed></mu-range-thumb-value>`;
+    (e.currentTarget as MuRange).insertThumbElement(thumb);
+  });
+</script>
+
+<style>
+  :root {
+    overflow-x: hidden;
+  }
+
+  .hidden-thumb::part(container) {
+    background-color: transparent;
+    box-shadow: unset;
+  }
+
+  mu-range {
+    margin-block: 3rem;
+  }
+</style>
+
+<Layout>
+  <div class="max-w-lg grid gap-10 w-full mx-auto">
+    <mu-range>
+      <mu-range-thumb value="50">
+        <mu-range-thumb-value></mu-range-thumb-value>
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Basic Range</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+      <mu-range-fill></mu-range-fill>
+    </mu-range>
+
+    <mu-range axis="-x">
+      <mu-range-thumb value="50">
+        <mu-range-thumb-value></mu-range-thumb-value>
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Basic Reversed Range</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+      <mu-range-fill></mu-range-fill>
+    </mu-range>
+
+    <div class="flex justify-evenly">
+      <mu-range axis="y">
+        <mu-range-thumb value="50">
+          <mu-range-thumb-value></mu-range-thumb-value>
+          <mu-range-thumb-value reversed>
+            <span data-is="content" class="hidden"></span>
+            <span class="break-words">Basic Vertical Range</span>
+          </mu-range-thumb-value>
+        </mu-range-thumb>
+        <mu-range-fill></mu-range-fill>
+      </mu-range>
+
+      <mu-range axis="-y">
+        <mu-range-thumb value="50">
+          <mu-range-thumb-value reversed></mu-range-thumb-value>
+          <mu-range-thumb-value>
+            <span data-is="content" class="hidden"></span>
+            <span class="break-words">Basic Reversed Vertical Range</span>
+          </mu-range-thumb-value>
+        </mu-range-thumb>
+        <mu-range-fill></mu-range-fill>
+      </mu-range>
+    </div>
+
+    <div class="flex gap-3 items-center">
+      <mu-range class="flex-1" value="50">
+        <mu-range-thumb>
+          <mu-range-thumb-value> </mu-range-thumb-value>
+          <mu-range-thumb-value reversed>
+            <span data-is="content" class="hidden"></span>
+            <span class="text-nowrap">Controlled Range</span>
+          </mu-range-thumb-value>
+        </mu-range-thumb>
+      </mu-range>
+      <label class="text-nowrap p-1"
+        >Set Value: <input
+          type="number"
+          value="50"
+          class="outline-current outline-1 p-1"
+          min="0"
+          max="100"
+          oninput="{this.closest('div').firstElementChild.value = this.value}"
+        /></label
+      >
+    </div>
+
+    <mu-range>
+      <mu-range-thumb step="10" value="50">
+        <mu-range-thumb-value></mu-range-thumb-value>
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">With Steps</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+      <mu-range-fill></mu-range-fill>
+    </mu-range>
+
+    <mu-range>
+      <mu-range-thumb disabled value="50">
+        <mu-range-thumb-value></mu-range-thumb-value>
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span>Disabled</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+      <mu-range-fill></mu-range-fill>
+    </mu-range>
+
+    <mu-range>
+      <mu-range-thumb readonly value="50">
+        <mu-range-thumb-value></mu-range-thumb-value>
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Read Only</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+      <mu-range-fill></mu-range-fill>
+    </mu-range>
+
+    <mu-range class="dynamic-range" empty-area="dispatch">
+      <mu-range-thumb class="hidden-thumb" transparent value="50">
+        <mu-range-thumb-value>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Dynamically Add Thumbs On Click</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+    </mu-range>
+
+    <mu-range>
+      <mu-range-thumb value="40" intersect-behavior="pass-over">
+        <mu-range-thumb-value>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Allow Other Ranges Passover</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+      <mu-range-thumb value="60">
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Disallow Other Ranges Passover</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+    </mu-range>
+
+    <mu-range>
+      <mu-range-thumb value="25">
+        <mu-range-thumb-value> </mu-range-thumb-value>
+      </mu-range-thumb>
+      <mu-range-thumb transparent value="50">
+        <mu-range-thumb-value> </mu-range-thumb-value>
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Transparent Range</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+      <mu-range-thumb value="75">
+        <mu-range-thumb-value> </mu-range-thumb-value>
+      </mu-range-thumb>
+    </mu-range>
+
+    <mu-range>
+      <mu-range-fill for="1,2"></mu-range-fill>
+
+      <mu-range-thumb class="hidden-thumb" transparent value="50">
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Shared Fill</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+
+      <mu-range-thumb name="1" value="25">
+        <mu-range-thumb-value> </mu-range-thumb-value>
+      </mu-range-thumb>
+
+      <mu-range-thumb name="2" value="75">
+        <mu-range-thumb-value> </mu-range-thumb-value>
+      </mu-range-thumb>
+    </mu-range>
+
+    <mu-range>
+      <mu-range-fill type="start"></mu-range-fill>
+      <mu-range-fill type="both"></mu-range-fill>
+      <mu-range-fill type="end"></mu-range-fill>
+
+      <mu-range-thumb value="15" max-value="30">
+        <mu-range-thumb-value></mu-range-thumb-value>
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Before Fill</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+
+      <mu-range-thumb max-value="60" value="50" name="2" min-value="40">
+        <mu-range-thumb-value
+          ><span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">Before And After Fill</span>
+        </mu-range-thumb-value>
+        <mu-range-thumb-value reversed></mu-range-thumb-value>
+      </mu-range-thumb>
+
+      <mu-range-thumb value="85" min-value="70">
+        <mu-range-thumb-value></mu-range-thumb-value>
+        <mu-range-thumb-value reversed>
+          <span data-is="content" class="hidden"></span>
+          <span class="text-nowrap">After Fill</span>
+        </mu-range-thumb-value>
+      </mu-range-thumb>
+    </mu-range>
+  </div>
+</Layout>

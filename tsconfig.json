@@ -1,0 +1,24 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "target": "es2021",
+    "noEmit": true,
+    "lib": ["ESNext", "DOM"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "sourceMap": true,
+    "allowImportingTsExtensions": false,
+    "strict": true,
+    "paths": {
+      "@/layouts/*": ["./src/layouts/*"],
+      "@/web-components/*": ["./src/web-components/*"],
+      "@/decorators": ["./src/decorators/index.ts"]
+    }
+  }
+}

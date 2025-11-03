@@ -1,0 +1,341 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<script>
+  import "@/web-components/mu-select";
+</script>
+
+<style>
+  @reference "../styles/global.css";
+  * {
+    outline: none;
+  }
+
+  mu-select {
+    width: 100%;
+    max-width: 250px;
+    margin: auto;
+  }
+
+  .container {
+    @apply p-2.5 outline-2 outline-indigo-900 rounded-lg grid items-center justify-items-center;
+
+    .header {
+      @apply text-2xl font-bold text-indigo-500;
+    }
+
+    .description {
+      @apply text-slate-400;
+    }
+
+    mu-select {
+      @apply mt-2.5;
+    }
+  }
+</style>
+
+<Layout>
+  <div class="grid gap-10 py-10 justify-center">
+    <div class="container">
+      <span class="header">Normal</span>
+      <span class="description">with value</span>
+      <mu-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Normal</span>
+      <span class="description">with template</span>
+      <mu-select>
+        <mu-select-label
+          type="label-template"
+          legend="label-template"
+          label="Select Item"></mu-select-label>
+        <mu-select-items>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Autocomplete</span>
+      <mu-select>
+        <mu-select-label
+          type="autocomplete"
+          legend="autocomplete"
+          label="Select Item"></mu-select-label>
+        <mu-select-items>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Autocomplete</span>
+      <span class="description">with template</span>
+      <mu-select>
+        <mu-select-label
+          type="autocomplete-template"
+          legend="autocomplete-template"
+          label="Select Item"></mu-select-label>
+        <mu-select-items>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Autocomplete</span>
+      <span class="description">with value</span>
+      <mu-select>
+        <mu-select-label
+          type="autocomplete-value"
+          legend="autocomplete-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Dynamic Position</span>
+      <span class="description">absolute on scroll</span>
+      <mu-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items open-mode="dynamic" position="absolute">
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Dynamic Position</span>
+      <span class="description">fixed on scroll</span>
+      <mu-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items open-mode="dynamic" position="fixed">
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Static Position</span>
+      <span class="description">fixed on scroll</span>
+      <mu-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items open-mode="static" position="fixed">
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Static Position</span>
+      <span class="description">absolute on scroll</span>
+      <mu-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items open-mode="static" position="absolute">
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Multiple</span>
+      <span class="description">with template</span>
+      <mu-select>
+        <mu-select-label
+          type="label-template"
+          legend="label-template"
+          label="Select Item"></mu-select-label>
+        <mu-select-items multiple>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Multiple</span>
+      <span class="description">with value</span>
+      <mu-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items multiple>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">No Close</span>
+      <span class="description">after selection</span>
+      <mu-select no-close-after-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">No Close</span>
+      <span class="description">after blur</span>
+      <mu-select no-close-after-blur>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">No Close</span>
+      <span class="description">after selection and blur</span>
+      <mu-select no-close-after-blur no-close-after-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Custom Label Markup</span>
+      <mu-select>
+        <mu-select-label type="label-value">
+          <mu-transparent content-selector="mu-select-label-content">
+            <div class="flex gap-2.5 items-center">
+              <p class="text-slate-300">Custom :</p>
+
+              <mu-select-label-content type="label">
+                Select Item
+              </mu-select-label-content>
+              <mu-select-label-content type="value">
+                <div class="flex gap-1.5 items-center">
+                  <span
+                    class="w-5 h-5 bg-indigo-200 grid content-center justify-center rounded-sm text-indigo-900"
+                  >
+                    ✔
+                  </span>
+                  <span data-is="content"></span>
+                </div>
+              </mu-select-label-content>
+            </div>
+          </mu-transparent>
+        </mu-select-label>
+        <mu-select-items>
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container">
+      <span class="header">Default Value</span>
+      <mu-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items default-value="Item 2">
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+
+    <div class="container" id="controlled-value">
+      <script>
+        import type { MuSelectItems } from "@/web-components/mu-select/mu-select-items";
+
+        const selectItems = document.querySelector(
+          "#controlled-value mu-select-items"
+        ) as MuSelectItems;
+        selectItems.addEventListener("mu-select-items-change", (e) => {
+          const result = confirm(
+            `Would you like to change the value to "${e.detail.values.join(", ")}"?`
+          );
+
+          if (result) {
+            selectItems.value = e.detail.values;
+          }
+        });
+      </script>
+      <span class="header">Controlled Value</span>
+      <mu-select>
+        <mu-select-label
+          type="label-value"
+          legend="label-value"
+          label="Select Item"></mu-select-label>
+        <mu-select-items value="">
+          <mu-select-item>Item 1</mu-select-item>
+          <mu-select-item>Item 2</mu-select-item>
+          <mu-select-item>Item 3</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+    </div>
+  </div>
+</Layout>
