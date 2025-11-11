@@ -41,7 +41,7 @@ export default defineConfig([
     output: {
       dir: outDir,
       format: "esm",
-      sourcemap: true,
+      sourcemap: false,
     },
     external: [/^lit/],
     plugins: [

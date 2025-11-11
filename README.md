@@ -1,4 +1,10 @@
-<h1 style="text-align: center; color: red; text-decoration: underline">Under Development</h1>
+# Under Development
+
+## Installation
+
+```bash
+npm i @mustib/web-components@alpha
+```
 
 This library is under development and is not ready for production use yet.
 
