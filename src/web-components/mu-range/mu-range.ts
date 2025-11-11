@@ -271,8 +271,8 @@ export class MuRange extends MUElement {
     if (this.isControlled) {
       this.sortThumbs()
       const sortedThumbs = this._thumbs.map(_thumb => ({ name: _thumb.name, value: _thumb.name === thumb.name ? stepValue : thumb.value }))
-      console.table(sortedThumbs)
-      // this.dispatchChangeEvent(sortedThumbs)
+
+      this.dispatchChangeEvent(sortedThumbs)
       return
     }
 
