@@ -8,7 +8,6 @@ import {
 } from '@mustib/utils/browser';
 import { css, html, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { staticProperty } from '@/decorators';
 import { MUElement } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
 import { MuSelectItem } from './mu-select-item';
@@ -193,8 +192,8 @@ export class MuSelectItems extends MUElement {
   })
   opened = false;
 
-  @staticProperty({
-    converter: Boolean,
+  @property({
+    type: Boolean,
   })
   multiple = false;
 
@@ -212,13 +211,18 @@ export class MuSelectItems extends MUElement {
   })
   value?: string[];
 
-  @staticProperty({ converter: Boolean })
+  @property({
+    type: Boolean,
+    attribute: 'no-clear-active-on-close',
+  })
   noClearActiveOnClose = false;
 
-  @staticProperty()
+  @property({
+    attribute: 'default-value',
+  })
   defaultValue?: string;
 
-  @staticProperty()
+  @property()
   position: 'absolute' | 'fixed' = 'fixed';
 
   /**
@@ -230,7 +234,7 @@ export class MuSelectItems extends MUElement {
    *
    * @default 'no-scroll'
    */
-  @staticProperty({ attribute: 'open-mode' })
+  @property({ attribute: 'open-mode' })
   openMode: 'static' | 'no-scroll' | 'dynamic' = 'no-scroll';
 
   override eventActionData = {

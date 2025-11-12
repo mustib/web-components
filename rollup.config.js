@@ -31,7 +31,6 @@ const componentsEntries = readdirSync(componentsDir, {
   },
   {
     index: path.join(componentsDir, 'index.ts'),
-    decorators: path.join(__dirname, 'src', 'decorators', 'index.ts'),
   },
 );
 

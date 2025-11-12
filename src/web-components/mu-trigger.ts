@@ -1,5 +1,5 @@
 import { parseJson } from '@mustib/utils';
-import { staticProperty } from '@/decorators';
+import { property } from 'lit/decorators.js';
 import { MuTransparent } from './mu-transparent';
 
 /**
@@ -21,14 +21,16 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    * @attr listen-to
    * @default "click"
    */
-  @staticProperty()
+  @property({
+    attribute: 'listen-to',
+  })
   listenTo = 'click';
 
   /**
    * A JSON string representing the detail to pass to the custom event.
    * @default undefined
    */
-  @staticProperty({
+  @property({
     converter(value) {
       return value ? parseJson(value) : undefined;
     },
@@ -39,28 +41,37 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    * A boolean value indicates if the event should call `stopPropagation`.
    * @default false
    */
-  @staticProperty({ converter: Boolean })
+  @property({
+    type: Boolean,
+    attribute: 'stop-propagation',
+  })
   stopPropagation = false;
 
   /**
    * A boolean value indicates if the event should call `stopImmediatePropagation`.
    * @default false
    */
-  @staticProperty({ converter: Boolean })
+  @property({
+    type: Boolean,
+    attribute: 'stop-immediate-propagation',
+  })
   stopImmediatePropagation = false;
 
   /**
    * The name of the custom event to dispatch when the trigger fires.
    * @default "mu-trigger-toggle"
    */
-  @staticProperty()
+  @property()
   dispatch = 'mu-trigger-toggle';
 
   /**
    * Whether the event is no-cancelable.
    * @default false
    */
-  @staticProperty({ converter: Boolean })
+  @property({
+    type: Boolean,
+    attribute: 'no-cancelable',
+  })
   noCancelable = false;
 
   /**
@@ -68,14 +79,20 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    *
    * @default false
    */
-  @staticProperty({ converter: Boolean })
+  @property({
+    type: Boolean,
+    attribute: 'no-bubble',
+  })
   noBubble = false;
 
   /**
    * A boolean value indicates if the listener should not be added as a capture listener.
    * @default false
    */
-  @staticProperty({ converter: Boolean })
+  @property({
+    type: Boolean,
+    attribute: 'no-capture',
+  })
   noCapture = false;
 
   /**
@@ -86,14 +103,19 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    *
    * @default undefined
    */
-  @staticProperty()
+  @property({
+    attribute: 'current-target-selector',
+  })
   currentTargetSelector?: string;
 
   /**
    * A boolean value indicates if the event should not call `preventDefault`.
    * @default false
    */
-  @staticProperty({ converter: Boolean })
+  @property({
+    type: Boolean,
+    attribute: 'no-prevent-default',
+  })
   noPreventDefault = false;
 
   /**
@@ -104,7 +126,9 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    *
    * @attr dispatch-to-selector
    */
-  @staticProperty()
+  @property({
+    attribute: 'dispatch-to-selector',
+  })
   dispatchToSelector?: string;
 
   override eventActionData = undefined;

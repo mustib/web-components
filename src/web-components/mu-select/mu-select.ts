@@ -1,7 +1,6 @@
 import { EventAction, type GenerateData } from '@mustib/utils/browser';
 import { type CSSResultGroup, css, html, type PropertyValues } from 'lit';
 import { property, queryAssignedElements } from 'lit/decorators.js';
-import { staticProperty } from '@/decorators';
 import { MUElement } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
 import { MuSelectItems, type MuSelectItemsEvents } from './mu-select-items';
@@ -216,10 +215,16 @@ export class MuSelect extends MUElement {
   @property({ reflect: true, type: Boolean })
   opened = false;
 
-  @staticProperty({ converter: Boolean })
+  @property({
+    type: Boolean,
+    attribute: 'no-close-after-select',
+  })
   noCloseAfterSelect = false;
 
-  @staticProperty({ converter: Boolean })
+  @property({
+    type: Boolean,
+    attribute: 'no-close-after-blur',
+  })
   noCloseAfterBlur = false;
 
   /**

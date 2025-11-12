@@ -1,5 +1,5 @@
 import { type CSSResultGroup, css, html, type PropertyValues } from 'lit';
-import { staticProperty } from '@/decorators';
+import { property } from 'lit/decorators.js';
 import { MUElement } from './mu-element';
 
 export class MuIcon extends MUElement {
@@ -45,7 +45,7 @@ export class MuIcon extends MUElement {
     `,
   };
 
-  @staticProperty()
+  @property()
   name?: keyof typeof MuIcon.icons;
 
   protected override firstUpdated(_changedProperties: PropertyValues): void {

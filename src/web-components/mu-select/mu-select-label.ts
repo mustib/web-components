@@ -11,7 +11,6 @@ import { property, state } from 'lit/decorators.js';
 import { MuTransparent } from '../mu-transparent';
 import { MuSelectLabelContent } from './mu-select-label-content';
 import '../mu-icon';
-import { staticProperty } from '@/decorators';
 
 export class MuSelectLabel extends MUElement {
   static override styles: CSSResultGroup = [
@@ -102,13 +101,13 @@ export class MuSelectLabel extends MUElement {
   @property({ reflect: true, type: Boolean })
   opened = false;
 
-  @staticProperty()
+  @property()
   label = 'Please select a value';
 
-  @staticProperty()
+  @property()
   legend?: string;
 
-  @staticProperty()
+  @property()
   type:
     | 'autocomplete'
     | 'autocomplete-value'

@@ -5,7 +5,6 @@ import {
 } from '@mustib/utils/browser';
 import { css, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
-import { staticProperty } from '@/decorators';
 
 type Elements = [
   'mu-select-item',
@@ -107,8 +106,9 @@ export abstract class MUElement extends LitElement {
    *
    * By default mu-element will call `_addEventActionAttributes` in connectedCallback if it is not undefined and `noEventActionAttributes` is false
    */
-  @staticProperty({
-    converter: Boolean,
+  @property({
+    type: Boolean,
+    attribute: 'no-event-action-attributes',
   })
   private noEventActionAttributes = false;
 
@@ -138,8 +138,15 @@ export abstract class MUElement extends LitElement {
   /**
    * A user customizable list of events names to add {@link https://mustib.github.io/mustib-utils/v2/utilities/browser/eventaction/ event action} listeners if the element has the `eventActionData` property
    */
-  @staticProperty({
-    converter: parseJson as never,
+  @property({
+    converter: {
+      toAttribute(value, _type) {
+        return JSON.stringify(value);
+      },
+      fromAttribute(value, _type) {
+        return value === null ? [] : parseJson(value);
+      },
+    },
   })
   protected readonly eventActionEvents?: string[];
 

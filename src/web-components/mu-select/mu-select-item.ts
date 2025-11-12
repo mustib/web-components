@@ -1,6 +1,5 @@
 import { css, html, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { staticProperty } from '@/decorators';
 import { MUElement } from '../mu-element';
 
 /**
@@ -64,7 +63,7 @@ export class MuSelectItem extends MUElement {
 
   override eventActionData = undefined;
 
-  @staticProperty()
+  @property()
   value = this.innerText;
 
   @property({
