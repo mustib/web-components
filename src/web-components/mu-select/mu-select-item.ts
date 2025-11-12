@@ -1,7 +1,7 @@
-import { property } from "lit/decorators.js";
-import { MUElement } from "../mu-element";
-import { css, html, type PropertyValues } from "lit";
-import { staticProperty } from "@/decorators";
+import { css, html, type PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
+import { staticProperty } from '@/decorators';
+import { MUElement } from '../mu-element';
 
 /**
  * This element is designed to be stateless, its purpose is to provide a means of adding custom markup and attributes
@@ -9,7 +9,9 @@ import { staticProperty } from "@/decorators";
  * solely controlled by its controller.
  */
 export class MuSelectItem extends MUElement {
-  static override styles = [MUElement.cssBase, css`
+  static override styles = [
+    MUElement.cssBase,
+    css`
     :host {
       overflow: hidden;
     }
@@ -57,7 +59,8 @@ export class MuSelectItem extends MUElement {
         --select-items-background-color: var(--mu-color-300);
       }
     }
-  `];
+  `,
+  ];
 
   override eventActionData = undefined;
 
@@ -65,50 +68,64 @@ export class MuSelectItem extends MUElement {
   value = this.innerText;
 
   @property({
-    reflect: true, type: Boolean,
+    reflect: true,
+    type: Boolean,
   })
   selected = false;
 
   @property({
-    reflect: true, type: Boolean,
+    reflect: true,
+    type: Boolean,
   })
   active = false;
 
   @property({
-    reflect: true, type: Boolean,
+    reflect: true,
+    type: Boolean,
     attribute: 'filtered-out',
   })
   filteredOut = false;
 
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     if (this.selected) {
-      console.warn('selected attribute should not be set on mu-select-item, please follow the proper way to add it through the controller', this)
+      console.warn(
+        'selected attribute should not be set on mu-select-item, please follow the proper way to add it through the controller',
+        this,
+      );
     }
 
     if (this.active) {
-      console.warn('active attribute should not be set on mu-select-item, please follow the proper way to add it through the controller', this)
+      console.warn(
+        'active attribute should not be set on mu-select-item, please follow the proper way to add it through the controller',
+        this,
+      );
     }
-
   }
 
   override connectedCallback() {
     super.connectedCallback();
     this.setAttribute('role', 'option');
-    this.setAttribute('aria-label', this.value)
+    this.setAttribute('aria-label', this.value);
   }
 
   protected override _addEventActionAttributes(): void {
-    this.setAttribute('data-items-pointerdown', `#prevent`)
-    this.setAttribute('data-items-click', `opened? toggle-select:${this.value}`)
-    this.setAttribute('data-items-pointerover', `#prevent && opened? set-active:${this.value}`)
+    this.setAttribute('data-items-pointerdown', `#prevent`);
+    this.setAttribute(
+      'data-items-click',
+      `opened? toggle-select:${this.value}`,
+    );
+    this.setAttribute(
+      'data-items-pointerover',
+      `#prevent && opened? set-active:${this.value}`,
+    );
   }
 
   override updated(changed: PropertyValues<this>) {
     if (changed.has('selected')) {
-      this.ariaSelected = `${!!this.selected}`
+      this.ariaSelected = `${!!this.selected}`;
     }
     if (changed.has('disabled')) {
-      this.ariaDisabled = `${!!this.disabled}`
+      this.ariaDisabled = `${!!this.disabled}`;
     }
   }
 
@@ -117,14 +134,14 @@ export class MuSelectItem extends MUElement {
       <div id='container' part='container'>
         <slot></slot>
       </div>
-    `
+    `;
   }
 }
 
-MuSelectItem.register("mu-select-item")
+MuSelectItem.register('mu-select-item');
 
 declare global {
   interface HTMLElementTagNameMap {
-    "mu-select-item": MuSelectItem;
+    'mu-select-item': MuSelectItem;
   }
 }

@@ -1,7 +1,6 @@
-import { parseJson } from "@mustib/utils";
-import { MuTransparent } from "./mu-transparent";
-import { staticProperty } from "@/decorators";
-import type { EventAction } from "@mustib/utils/browser";
+import { parseJson } from '@mustib/utils';
+import { staticProperty } from '@/decorators';
+import { MuTransparent } from './mu-transparent';
 
 /**
  * `<mu-trigger>` is a helper element that listens for a specified event
@@ -10,9 +9,9 @@ import type { EventAction } from "@mustib/utils/browser";
  *
  * This is useful when you want to listen to event and dispatch a custom event
  * like dispatch toggle when a user clicks on a button.
- * 
+ *
  * it abstracts away the logic of selecting the element, listening to the event, dispatching the custom event, removing the event listener when the element is disconnected, and more.
- * 
+ *
  * you can reuse different triggers (click, keydown, hover, etc.)
  * without hard-coding logic inside the parent element (e.g., `mu-select`).
  */
@@ -23,7 +22,7 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    * @default "click"
    */
   @staticProperty()
-  listenTo = 'click'
+  listenTo = 'click';
 
   /**
    * A JSON string representing the detail to pass to the custom event.
@@ -31,40 +30,38 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    */
   @staticProperty({
     converter(value) {
-      return value ? parseJson(value) : undefined
+      return value ? parseJson(value) : undefined;
     },
   })
-  detail: any
+  detail: unknown;
 
   /**
    * A boolean value indicates if the event should call `stopPropagation`.
    * @default false
    */
   @staticProperty({ converter: Boolean })
-  stopPropagation = false
+  stopPropagation = false;
 
   /**
    * A boolean value indicates if the event should call `stopImmediatePropagation`.
    * @default false
    */
   @staticProperty({ converter: Boolean })
-  stopImmediatePropagation = false
+  stopImmediatePropagation = false;
 
   /**
    * The name of the custom event to dispatch when the trigger fires.
    * @default "mu-trigger-toggle"
    */
   @staticProperty()
-  dispatch = 'mu-trigger-toggle'
-
+  dispatch = 'mu-trigger-toggle';
 
   /**
    * Whether the event is no-cancelable.
    * @default false
    */
   @staticProperty({ converter: Boolean })
-  noCancelable = false
-
+  noCancelable = false;
 
   /**
    * Whether the custom event should not bubble.
@@ -72,36 +69,32 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    * @default false
    */
   @staticProperty({ converter: Boolean })
-  noBubble = false
-
+  noBubble = false;
 
   /**
    * A boolean value indicates if the listener should not be added as a capture listener.
    * @default false
    */
   @staticProperty({ converter: Boolean })
-  noCapture = false
-
+  noCapture = false;
 
   /**
    * A css selector that is used to find the element that will listen for the event.
    * which is the current target of the event.
-   * 
+   *
    * current target will be this element by default
-   * 
+   *
    * @default undefined
    */
   @staticProperty()
-  currentTargetSelector?: string
-
+  currentTargetSelector?: string;
 
   /**
    * A boolean value indicates if the event should not call `preventDefault`.
    * @default false
    */
   @staticProperty({ converter: Boolean })
-  noPreventDefault = false
-
+  noPreventDefault = false;
 
   /**
    * A CSS selector used to find the element where the event should be dispatched.
@@ -112,37 +105,45 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    * @attr dispatch-to-selector
    */
   @staticProperty()
-  dispatchToSelector?: string
+  dispatchToSelector?: string;
 
   override eventActionData = undefined;
-  override _addEventActionAttributes = undefined
-
+  override _addEventActionAttributes = undefined;
 
   /**
    * The current target of the event.
    */
   protected get _currentTarget(): Element {
-    const currTarget = this.currentTargetSelector ? this.closestPierce(this.currentTargetSelector) : this
+    const currTarget = this.currentTargetSelector
+      ? this.closestPierce(this.currentTargetSelector)
+      : this;
     if (!currTarget) {
-      console.warn(`no element found with selector (${this.currentTargetSelector}) as the current target to listen to (${this.listenTo}) events.\nFalling back to the current element`, this)
+      console.warn(
+        `no element found with selector (${this.currentTargetSelector}) as the current target to listen to (${this.listenTo}) events.\nFalling back to the current element`,
+        this,
+      );
     }
 
-    return currTarget || this
+    return currTarget || this;
   }
-
 
   /**
    * A function that returns the element where the event should be dispatched.
    * If not provided, the trigger dispatches the event on itself.
    */
   protected _getDispatchElement(): Element {
-    const element = this.dispatchToSelector ? this.closestPierce(this.dispatchToSelector) : this
+    const element = this.dispatchToSelector
+      ? this.closestPierce(this.dispatchToSelector)
+      : this;
 
-    if (!element) console.warn(`no element found with selector ${this.dispatchToSelector} to dispatch ${this.dispatch} to.\nFalling back to the current element`, this);
+    if (!element)
+      console.warn(
+        `no element found with selector ${this.dispatchToSelector} to dispatch ${this.dispatch} to.\nFalling back to the current element`,
+        this,
+      );
 
-    return element || this
+    return element || this;
   }
-
 
   /**
    * This function is called after the event is fired.
@@ -156,42 +157,56 @@ export class MuTrigger<T extends Event = Event> extends MuTransparent {
    * @param e The original event that was fired.
    * @returns {Object} An object with the properties above.
    */
-  protected _createDispatchEvent(e: T): { shouldDispatch: boolean, eventName: string, dispatchElement: Element } {
+  protected _createDispatchEvent(_e: T): {
+    shouldDispatch: boolean;
+    eventName: string;
+    dispatchElement: Element;
+  } {
     return {
       shouldDispatch: true,
       eventName: this.dispatch,
-      dispatchElement: this._getDispatchElement()
-    }
+      dispatchElement: this._getDispatchElement(),
+    };
   }
 
-
   /**
-   * 
+   *
    */
   protected _listener = (e: Event) => {
-    if (this.disabled) return
-    if (this.stopPropagation) e.stopPropagation()
-    if (this.stopImmediatePropagation) e.stopImmediatePropagation()
-    if (!this.noPreventDefault) e.preventDefault()
+    if (this.disabled) return;
+    if (this.stopPropagation) e.stopPropagation();
+    if (this.stopImmediatePropagation) e.stopImmediatePropagation();
+    if (!this.noPreventDefault) e.preventDefault();
 
-    const { dispatchElement, eventName, shouldDispatch } = this._createDispatchEvent(e as T);
-    if (!shouldDispatch) return
+    const { dispatchElement, eventName, shouldDispatch } =
+      this._createDispatchEvent(e as T);
+    if (!shouldDispatch) return;
 
-    dispatchElement.dispatchEvent(new CustomEvent(eventName, { bubbles: !this.noBubble, composed: true, cancelable: !this.noCancelable, detail: this.detail }))
-  }
-
+    dispatchElement.dispatchEvent(
+      new CustomEvent(eventName, {
+        bubbles: !this.noBubble,
+        composed: true,
+        cancelable: !this.noCancelable,
+        detail: this.detail,
+      }),
+    );
+  };
 
   /**
-   * 
+   *
    */
   override connectedCallback(): void {
     super.connectedCallback();
-    this._currentTarget.addEventListener(this.listenTo, this._listener, { capture: !this.noCapture })
+    this._currentTarget.addEventListener(this.listenTo, this._listener, {
+      capture: !this.noCapture,
+    });
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._currentTarget.removeEventListener(this.listenTo, this._listener, { capture: !this.noCapture })
+    this._currentTarget.removeEventListener(this.listenTo, this._listener, {
+      capture: !this.noCapture,
+    });
   }
 }
 

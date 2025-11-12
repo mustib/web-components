@@ -1,9 +1,11 @@
-import { css, html, type CSSResultGroup } from "lit";
-import { MUElement } from "../mu-element";
-import { property, query } from "lit/decorators.js";
+import { type CSSResultGroup, css, html } from 'lit';
+import { property, query } from 'lit/decorators.js';
+import { MUElement } from '../mu-element';
 
 export class MuRangeThumbValue extends MUElement {
-  static override styles: CSSResultGroup = [MUElement.cssBase, css`
+  static override styles: CSSResultGroup = [
+    MUElement.cssBase,
+    css`
     :host([reversed]) #container[axis='x'] {
       top: 100%;
       bottom: unset;
@@ -53,64 +55,65 @@ export class MuRangeThumbValue extends MUElement {
         color: var(--mu-color-100);
       }
     }
-  `];
+  `,
+  ];
 
   override eventActionData = undefined;
-  override _addEventActionAttributes = undefined
+  override _addEventActionAttributes = undefined;
 
   /**
    * A boolean that indicated if the position of the value should be on the opposite side.
-   * 
+   *
    * so if the default value position is left, it will be right
    * and the default is top, it will be bottom, etc
    */
   @property({ type: Boolean })
-  reversed = false
+  reversed = false;
 
   /**
    * A string representing the type of the value to display.
-   * 
+   *
    * - unit: The value will be displayed as a number with one decimal place.
    * - percentage: The value will be displayed as a percentage with two decimal places.
    * - percentage:round: The value will be displayed as a rounded percentage.
-   * 
+   *
    * @default 'unit'
    */
   @property()
-  type: 'unit' | 'percentage' | 'percentage:round' = 'unit'
+  type: 'unit' | 'percentage' | 'percentage:round' = 'unit';
 
   @query('#container', true)
-  container!: HTMLElement
+  container!: HTMLElement;
 
   /**
    * A getter for the element that should contain the value.
-   * 
+   *
    * it can be any element that has the attribute `data-is="content"`.
-   * 
+   *
    * that element's text content will be replaced with the value.
-   * 
+   *
    * @default this
    */
   get contentEl(): Element {
-    return this.querySelector('[data-is="content"]') || this
+    return this.querySelector('[data-is="content"]') || this;
   }
 
-  async setValue(data: { percentage: number, value: number }) {
-    await this.updateComplete
+  async setValue(data: { percentage: number; value: number }) {
+    await this.updateComplete;
     switch (this.type) {
-      case "percentage":
+      case 'percentage':
         // keep two decimal places
-        this.contentEl.textContent = `${(Math.trunc(data.percentage * 100) / 100)}%`
+        this.contentEl.textContent = `${Math.trunc(data.percentage * 100) / 100}%`;
         break;
-      case "percentage:round":
-        this.contentEl.textContent = `${Math.round(data.percentage)}%`
+      case 'percentage:round':
+        this.contentEl.textContent = `${Math.round(data.percentage)}%`;
         break;
-      case "unit":
+      case 'unit':
         // keep one decimal place
-        this.contentEl.textContent = `${(Math.trunc(data.value * 10) / 10)}`
+        this.contentEl.textContent = `${Math.trunc(data.value * 10) / 10}`;
         break;
       default:
-        this.type satisfies never
+        this.type satisfies never;
         break;
     }
   }
@@ -119,8 +122,8 @@ export class MuRangeThumbValue extends MUElement {
    * Sets the axis of the value.
    */
   async setAxis(axis: 'x' | 'y') {
-    await this.updateComplete
-    this.container.setAttribute('axis', axis)
+    await this.updateComplete;
+    this.container.setAttribute('axis', axis);
   }
 
   override render(): unknown {
@@ -128,8 +131,8 @@ export class MuRangeThumbValue extends MUElement {
       <div id='container' part='container'>
         <slot></slot>
       </div>
-      `
+      `;
   }
 }
 
-MuRangeThumbValue.register('mu-range-thumb-value')
+MuRangeThumbValue.register('mu-range-thumb-value');
