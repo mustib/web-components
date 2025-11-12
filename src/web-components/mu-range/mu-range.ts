@@ -11,6 +11,19 @@ import { MuTransparent } from '../mu-transparent';
 import { MuRangeFill } from './mu-range-fill';
 import { MuRangeThumb } from './mu-range-thumb';
 
+export type MuRangeComponent = {
+  attributes: {
+    axis: MuRange['axis'];
+    min: MuRange['min'];
+    max: MuRange['max'];
+    value: MuRange['value'];
+    'default-value': MuRange['defaultValue'];
+    'empty-area': MuRange['emptyArea'];
+  };
+
+  events: Events;
+};
+
 type RangeThumb = {
   element: MuRangeThumb;
   linkedFillElements: RangeFill[] | undefined;

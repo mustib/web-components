@@ -2,6 +2,22 @@ import { parseJson } from '@mustib/utils';
 import { property } from 'lit/decorators.js';
 import { MuTransparent } from './mu-transparent';
 
+export type MuTriggerComponent = {
+  attributes: {
+    'listen-to': MuTrigger['listenTo'];
+    detail: MuTrigger['detail'];
+    'stop-propagation': MuTrigger['stopPropagation'];
+    'stop-immediate-propagation': MuTrigger['stopImmediatePropagation'];
+    dispatch: MuTrigger['dispatch'];
+    'no-cancelable': MuTrigger['noCancelable'];
+    'no-bubble': MuTrigger['noBubble'];
+    'no-capture': MuTrigger['noCapture'];
+    'current-target-selector': MuTrigger['currentTargetSelector'];
+    'no-prevent-default': MuTrigger['noPreventDefault'];
+    'dispatch-to-selector': MuTrigger['dispatchToSelector'];
+  };
+};
+
 /**
  * `<mu-trigger>` is a helper element that listens for a specified event
  * (e.g., `click`) and dispatches a custom event (e.g., `mu-trigger-toggle`)

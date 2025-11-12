@@ -12,6 +12,20 @@ import { MUElement } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
 import { MuSelectItem } from './mu-select-item';
 
+export type MuSelectItemsComponent = {
+  attributes: {
+    opened: MuSelectItems['opened'];
+    multiple: MuSelectItems['multiple'];
+    value: MuSelectItems['value'];
+    'no-clear-active-on-close': MuSelectItems['noClearActiveOnClose'];
+    'default-value': MuSelectItems['defaultValue'];
+    position: MuSelectItems['position'];
+    'open-mode': MuSelectItems['openMode'];
+  };
+
+  events: Events;
+};
+
 type SelectItem = {
   element: MuSelectItem;
   value: string;
@@ -20,7 +34,7 @@ type SelectItem = {
   index: number;
 };
 
-export type MuSelectItemsEvents = {
+export type Events = {
   /**
    * this event is dispatched whenever the user selects an item
    */
@@ -463,10 +477,11 @@ export class MuSelectItems extends MUElement {
   protected _dispatchActiveItemChange({ id }: { id: string | undefined }) {
     const eventName = 'mu-select-items-active-item-change';
     this.dispatchEvent(
-      new CustomEvent<MuSelectItemsEvents[typeof eventName]['detail']>(
-        eventName,
-        { bubbles: true, composed: true, detail: { id } },
-      ),
+      new CustomEvent<Events[typeof eventName]['detail']>(eventName, {
+        bubbles: true,
+        composed: true,
+        detail: { id },
+      }),
     );
   }
 
@@ -561,17 +576,14 @@ export class MuSelectItems extends MUElement {
 
       const eventName = 'mu-select-items-change-orphans';
       this.dispatchEvent(
-        new CustomEvent<MuSelectItemsEvents[typeof eventName]['detail']>(
-          eventName,
-          {
-            bubbles: true,
-            composed: true,
-            detail: {
-              orphanValues: Array.from(removedSelected),
-              values: Array.from(newSelectedValues),
-            },
+        new CustomEvent<Events[typeof eventName]['detail']>(eventName, {
+          bubbles: true,
+          composed: true,
+          detail: {
+            orphanValues: Array.from(removedSelected),
+            values: Array.from(newSelectedValues),
           },
-        ),
+        }),
       );
     }
 
@@ -606,17 +618,16 @@ export class MuSelectItems extends MUElement {
     }
   }
 
-  _dispatchChangeEvent(
-    detail: MuSelectItemsEvents['mu-select-items-change']['detail'],
-  ) {
-    const event = new CustomEvent<
-      MuSelectItemsEvents['mu-select-items-change']['detail']
-    >('mu-select-items-change', {
-      detail,
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-    });
+  _dispatchChangeEvent(detail: Events['mu-select-items-change']['detail']) {
+    const event = new CustomEvent<Events['mu-select-items-change']['detail']>(
+      'mu-select-items-change',
+      {
+        detail,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      },
+    );
     this.dispatchEvent(event);
   }
 
@@ -734,10 +745,11 @@ export class MuSelectItems extends MUElement {
 
     const eventName = 'mu-select-items-change-forced';
     this.dispatchEvent(
-      new CustomEvent<MuSelectItemsEvents[typeof eventName]['detail']>(
-        eventName,
-        { bubbles: true, composed: true, detail: { values: validValues } },
-      ),
+      new CustomEvent<Events[typeof eventName]['detail']>(eventName, {
+        bubbles: true,
+        composed: true,
+        detail: { values: validValues },
+      }),
     );
   }
 
@@ -846,5 +858,5 @@ declare global {
     'mu-select-items': MuSelectItems;
   }
 
-  interface GlobalEventHandlersEventMap extends MuSelectItemsEvents {}
+  interface GlobalEventHandlersEventMap extends Events {}
 }

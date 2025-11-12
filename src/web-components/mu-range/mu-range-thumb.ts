@@ -5,6 +5,20 @@ import { MUElement } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
 import { MuRangeThumbValue } from './mu-range-thumb-value';
 
+export type MuRangeThumbComponent = {
+  attributes: {
+    'min-value': MuRangeThumb['minValue'];
+    'max-value': MuRangeThumb['maxValue'];
+    value: MuRangeThumb['value'];
+    step: MuRangeThumb['step'];
+    name: MuRangeThumb['name'];
+    focused: MuRangeThumb['focused'];
+    'intersect-behavior': MuRangeThumb['intersectBehavior'];
+    transparent: MuRangeThumb['transparent'];
+    'force-step': MuRangeThumb['forceStep'];
+  };
+};
+
 export class MuRangeThumb extends MUElement {
   static override styles?: CSSResultGroup | undefined = [
     MUElement.cssBase,

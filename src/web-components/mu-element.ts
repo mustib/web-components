@@ -28,7 +28,7 @@ export abstract class MUElement extends LitElement {
   static #muElements = new Map<string, { element: MUElement }>();
   static closestPierce = closestPierce;
 
-  static register(this: { new(): MUElement }, tagName: Elements[number]) {
+  static register(this: { new (): MUElement }, tagName: Elements[number]) {
     if (customElements.get(tagName)) return;
     // biome-ignore lint/complexity/noThisInStatic: <>
     customElements.define(tagName, this as CustomElementConstructor);
@@ -127,13 +127,13 @@ export abstract class MUElement extends LitElement {
   abstract eventActionData:
     | undefined
     | {
-      eventAction: EventAction<unknown>;
+        eventAction: EventAction<unknown>;
 
-      /**
-       * A list of default events names to add {@link https://mustib.github.io/mustib-utils/v2/utilities/browser/eventaction/ event action} listeners
-       */
-      events: string[];
-    };
+        /**
+         * A list of default events names to add {@link https://mustib.github.io/mustib-utils/v2/utilities/browser/eventaction/ event action} listeners
+         */
+        events: string[];
+      };
 
   /**
    * A user customizable list of events names to add {@link https://mustib.github.io/mustib-utils/v2/utilities/browser/eventaction/ event action} listeners if the element has the `eventActionData` property

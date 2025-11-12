@@ -2,7 +2,15 @@ import { type CSSResultGroup, css, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { MUElement } from './mu-element';
 
-export type Events = {
+export type MuTransparentComponent = {
+  attributes: {
+    'content-selector': MuTransparent['contentSelector'];
+  };
+
+  events: Events;
+};
+
+type Events = {
   'mu-transparent-slotchange': CustomEvent<{
     source: MuTransparent;
   }>;

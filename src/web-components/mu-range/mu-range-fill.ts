@@ -2,6 +2,13 @@ import { type CSSResultGroup, css, html } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { MUElement } from '../mu-element';
 
+export type MuRangeFillComponent = {
+  attributes: {
+    for: MuRangeFill['for'];
+    type: MuRangeFill['type'];
+  };
+};
+
 export class MuRangeFill extends MUElement {
   static override styles: CSSResultGroup = [
     MUElement.cssBase,

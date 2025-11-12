@@ -3,10 +3,20 @@ import { type CSSResultGroup, css, html, type PropertyValues } from 'lit';
 import { property, queryAssignedElements } from 'lit/decorators.js';
 import { MUElement } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
-import { MuSelectItems, type MuSelectItemsEvents } from './mu-select-items';
+import { MuSelectItems, type MuSelectItemsComponent } from './mu-select-items';
 import { MuSelectLabel } from './mu-select-label';
 
-export type MuSelectEvents = {
+export type MuSelectComponent = {
+  attributes: {
+    opened: MuSelect['opened'];
+    'no-close-after-select': MuSelect['noCloseAfterSelect'];
+    'no-close-after-blur': MuSelect['noCloseAfterBlur'];
+  };
+
+  events: Events;
+};
+
+type Events = {
   'mu-select-opened': CustomEvent;
 
   'mu-select-closed': CustomEvent;
@@ -329,7 +339,9 @@ export class MuSelect extends MUElement {
     this.addEventListener('mu-select-items-change', this.itemsChangeHandler);
   }
 
-  itemsChangeHandler = (e: MuSelectItemsEvents['mu-select-items-change']) => {
+  itemsChangeHandler = (
+    e: MuSelectItemsComponent['events']['mu-select-items-change'],
+  ) => {
     e.detail.isCurrentSelection && this._valueChanged(e.detail.values);
 
     if (this._labelElement?.hasAutocomplete) {
@@ -451,5 +463,5 @@ declare global {
     'mu-select': MuSelect;
   }
 
-  interface GlobalEventHandlersEventMap extends MuSelectEvents {}
+  interface GlobalEventHandlersEventMap extends Events {}
 }

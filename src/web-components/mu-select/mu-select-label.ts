@@ -12,6 +12,15 @@ import { MuTransparent } from '../mu-transparent';
 import { MuSelectLabelContent } from './mu-select-label-content';
 import '../mu-icon';
 
+export type MuSelectLabelComponent = {
+  attributes: {
+    opened: MuSelectLabel['opened'];
+    label: MuSelectLabel['label'];
+    legend: MuSelectLabel['legend'];
+    type: MuSelectLabel['type'];
+  };
+};
+
 export class MuSelectLabel extends MUElement {
   static override styles: CSSResultGroup = [
     MUElement.cssBase,

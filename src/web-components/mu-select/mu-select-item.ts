@@ -2,6 +2,15 @@ import { css, html, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 import { MUElement } from '../mu-element';
 
+export type MuSelectItemComponent = {
+  attributes: {
+    value: MuSelectItem['value'];
+    selected: MuSelectItem['selected'];
+    active: MuSelectItem['active'];
+    'filtered-out': MuSelectItem['filteredOut'];
+  };
+};
+
 /**
  * This element is designed to be stateless, its purpose is to provide a means of adding custom markup and attributes
  * without the need for controlling its state externally. It should not be modified by other parties, and its state is

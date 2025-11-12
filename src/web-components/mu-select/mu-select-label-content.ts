@@ -3,6 +3,13 @@ import { property, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { MUElement } from '../mu-element';
 
+export type MuSelectLabelContentComponent = {
+  attributes: {
+    type: MuSelectLabelContent['type'];
+    active: MuSelectLabelContent['active'];
+  };
+};
+
 const types = ['label', 'value', 'autocomplete', 'template'] as const;
 
 const contentSelector = '[data-is="content"]';

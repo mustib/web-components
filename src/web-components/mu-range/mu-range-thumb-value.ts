@@ -2,6 +2,13 @@ import { type CSSResultGroup, css, html } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { MUElement } from '../mu-element';
 
+export type MuRangeThumbValueComponent = {
+  attributes: {
+    reversed: MuRangeThumbValue['reversed'];
+    type: MuRangeThumbValue['type'];
+  };
+};
+
 export class MuRangeThumbValue extends MUElement {
   static override styles: CSSResultGroup = [
     MUElement.cssBase,
