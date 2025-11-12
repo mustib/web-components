@@ -5,7 +5,7 @@ import {
   nothing,
   type PropertyValues,
 } from 'lit';
-import { MUElement } from '../mu-element';
+import { MuElement, type MuElementComponent } from '../mu-element';
 import '../mu-trigger';
 import { property, state } from 'lit/decorators.js';
 import { MuTransparent } from '../mu-transparent';
@@ -13,7 +13,7 @@ import { MuSelectLabelContent } from './mu-select-label-content';
 import '../mu-icon';
 
 export type MuSelectLabelComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     opened: MuSelectLabel['opened'];
     label: MuSelectLabel['label'];
     legend: MuSelectLabel['legend'];
@@ -21,9 +21,9 @@ export type MuSelectLabelComponent = {
   };
 };
 
-export class MuSelectLabel extends MUElement {
+export class MuSelectLabel extends MuElement {
   static override styles: CSSResultGroup = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     :host(:focus-within) #container,
     :host([opened]) #container {
@@ -133,7 +133,7 @@ export class MuSelectLabel extends MUElement {
   protected _valueType!: 'value' | 'template' | 'autocomplete-label';
   protected labelElement?: MuSelectLabelContent;
   protected valueElement?: MuSelectLabelContent;
-  protected _isReadyPromise!: ReturnType<MUElement['generateIsReadyPromise']>;
+  protected _isReadyPromise!: ReturnType<MuElement['generateIsReadyPromise']>;
   override eventActionData = undefined;
 
   get hasAutocomplete() {

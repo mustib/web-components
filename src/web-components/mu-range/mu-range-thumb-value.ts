@@ -1,17 +1,17 @@
 import { type CSSResultGroup, css, html } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import { MUElement } from '../mu-element';
+import { MuElement, type MuElementComponent } from '../mu-element';
 
 export type MuRangeThumbValueComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     reversed: MuRangeThumbValue['reversed'];
     type: MuRangeThumbValue['type'];
   };
 };
 
-export class MuRangeThumbValue extends MUElement {
+export class MuRangeThumbValue extends MuElement {
   static override styles: CSSResultGroup = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     :host([reversed]) #container[axis='x'] {
       top: 100%;

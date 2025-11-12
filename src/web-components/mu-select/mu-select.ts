@@ -1,13 +1,13 @@
 import { EventAction, type GenerateData } from '@mustib/utils/browser';
 import { type CSSResultGroup, css, html, type PropertyValues } from 'lit';
 import { property, queryAssignedElements } from 'lit/decorators.js';
-import { MUElement } from '../mu-element';
+import { MuElement, type MuElementComponent } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
 import { MuSelectItems, type MuSelectItemsComponent } from './mu-select-items';
 import { MuSelectLabel } from './mu-select-label';
 
 export type MuSelectComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     opened: MuSelect['opened'];
     'no-close-after-select': MuSelect['noCloseAfterSelect'];
     'no-close-after-blur': MuSelect['noCloseAfterBlur'];
@@ -22,9 +22,9 @@ type Events = {
   'mu-select-closed': CustomEvent;
 };
 
-export class MuSelect extends MUElement {
+export class MuSelect extends MuElement {
   static override styles: CSSResultGroup = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     :host([opened]) #container {
       z-index: 100;

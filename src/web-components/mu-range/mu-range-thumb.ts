@@ -1,12 +1,12 @@
 import { getElementBoundaries } from '@mustib/utils/browser';
 import { type CSSResultGroup, css, html, type PropertyValues } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
-import { MUElement } from '../mu-element';
+import { MuElement, type MuElementComponent } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
 import { MuRangeThumbValue } from './mu-range-thumb-value';
 
 export type MuRangeThumbComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     'min-value': MuRangeThumb['minValue'];
     'max-value': MuRangeThumb['maxValue'];
     value: MuRangeThumb['value'];
@@ -19,9 +19,9 @@ export type MuRangeThumbComponent = {
   };
 };
 
-export class MuRangeThumb extends MUElement {
+export class MuRangeThumb extends MuElement {
   static override styles?: CSSResultGroup | undefined = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     #container {
       --thumb-size: var(--mu-range-thumb-size, calc(var(--range-thickness) * 3));
@@ -41,7 +41,7 @@ export class MuRangeThumb extends MUElement {
 
 
     :host([focused]) #container {
-      ${MUElement.css.focus};
+      ${MuElement.css.focus};
     }
 
     #container[axis='x'] {

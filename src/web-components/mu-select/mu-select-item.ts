@@ -1,9 +1,9 @@
 import { css, html, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { MUElement } from '../mu-element';
+import { MuElement, type MuElementComponent } from '../mu-element';
 
 export type MuSelectItemComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     value: MuSelectItem['value'];
     selected: MuSelectItem['selected'];
     active: MuSelectItem['active'];
@@ -16,9 +16,9 @@ export type MuSelectItemComponent = {
  * without the need for controlling its state externally. It should not be modified by other parties, and its state is
  * solely controlled by its controller.
  */
-export class MuSelectItem extends MUElement {
+export class MuSelectItem extends MuElement {
   static override styles = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     :host {
       overflow: hidden;
@@ -29,7 +29,7 @@ export class MuSelectItem extends MUElement {
     }
 
     :host(:focus-visible) #container {
-      ${MUElement.css.focus}
+      ${MuElement.css.focus}
     }
 
     :host([active]) #container {

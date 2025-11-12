@@ -18,12 +18,6 @@ packageJson.exports = {
       default: './index.js',
     },
   },
-  './decorators': {
-    import: {
-      types: './decorators.d.ts',
-      default: './decorators.js',
-    },
-  },
   './*': {
     import: {
       types: './*.d.ts',

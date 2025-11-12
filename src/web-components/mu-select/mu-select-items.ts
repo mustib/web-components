@@ -8,12 +8,12 @@ import {
 } from '@mustib/utils/browser';
 import { css, html, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { MUElement } from '../mu-element';
+import { MuElement, type MuElementComponent } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
 import { MuSelectItem } from './mu-select-item';
 
 export type MuSelectItemsComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     opened: MuSelectItems['opened'];
     multiple: MuSelectItems['multiple'];
     value: MuSelectItems['value'];
@@ -102,9 +102,9 @@ type SwitchActiveItemOptions = Partial<{
   switchBack: boolean;
 }>;
 
-export class MuSelectItems extends MUElement {
+export class MuSelectItems extends MuElement {
   static override styles = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     #container {
       --select-items-background-color: var(--mu-select-items-background-color, var(--mu-color-800));

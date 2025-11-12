@@ -1,10 +1,10 @@
 import { type CSSResultGroup, css, html, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { MUElement } from '../mu-element';
+import { MuElement, type MuElementComponent } from '../mu-element';
 
 export type MuSelectLabelContentComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     type: MuSelectLabelContent['type'];
     active: MuSelectLabelContent['active'];
   };
@@ -23,9 +23,9 @@ const contentSelector = '[data-is="content"]';
  *
  * You also need to set the `type` attribute to either `"label"` or `"value"` so the parent label knows which element to update.
  */
-export class MuSelectLabelContent extends MUElement {
+export class MuSelectLabelContent extends MuElement {
   static override styles: CSSResultGroup = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     :host {
       overflow: hidden;

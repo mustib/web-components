@@ -1,9 +1,9 @@
 import { parseJson } from '@mustib/utils';
 import { property } from 'lit/decorators.js';
-import { MuTransparent } from './mu-transparent';
+import { MuTransparent, type MuTransparentComponent } from './mu-transparent';
 
 export type MuTriggerComponent = {
-  attributes: {
+  attributes: MuTransparentComponent['attributes'] & {
     'listen-to': MuTrigger['listenTo'];
     detail: MuTrigger['detail'];
     'stop-propagation': MuTrigger['stopPropagation'];

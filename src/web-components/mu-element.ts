@@ -6,6 +6,15 @@ import {
 import { css, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
+export type MuElementComponent = {
+  attributes: {
+    disabled: MuElement['disabled'];
+    readonly: MuElement['readonly'];
+    'no-event-action-attributes': MuElement['noEventActionAttributes'];
+    'event-action-events': MuElement['eventActionEvents'];
+  };
+};
+
 type Elements = [
   'mu-select-item',
   'mu-select-items',
@@ -24,11 +33,11 @@ type Elements = [
 ];
 
 let count = 0;
-export abstract class MUElement extends LitElement {
-  static #muElements = new Map<string, { element: MUElement }>();
+export abstract class MuElement extends LitElement {
+  static #muElements = new Map<string, { element: MuElement }>();
   static closestPierce = closestPierce;
 
-  static register(this: { new (): MUElement }, tagName: Elements[number]) {
+  static register(this: { new (): MuElement }, tagName: Elements[number]) {
     if (customElements.get(tagName)) return;
     // biome-ignore lint/complexity/noThisInStatic: <>
     customElements.define(tagName, this as CustomElementConstructor);
@@ -70,7 +79,7 @@ export abstract class MUElement extends LitElement {
     }
 
     :where(:host) {
-      ${MUElement.cssColors}
+      ${MuElement.cssColors}
       --mu-base-rem: 10px;
       --mu-hue: 240;
       display: block;
@@ -147,6 +156,7 @@ export abstract class MUElement extends LitElement {
         return value === null ? [] : parseJson(value);
       },
     },
+    attribute: 'event-action-events',
   })
   protected readonly eventActionEvents?: string[];
 
@@ -206,11 +216,11 @@ export abstract class MUElement extends LitElement {
   }
 
   getMuElementById(id: string) {
-    return MUElement.#muElements.get(id);
+    return MuElement.#muElements.get(id);
   }
 
   closestPierce(selector: string) {
-    return MUElement.closestPierce(selector, this);
+    return MuElement.closestPierce(selector, this);
   }
 
   /**
@@ -302,7 +312,7 @@ export abstract class MUElement extends LitElement {
     super.connectedCallback();
     this.dataset.muId = this.muId;
     if (!this.id) this.id = this.muId;
-    MUElement.#muElements.set(this.muId, { element: this });
+    MuElement.#muElements.set(this.muId, { element: this });
 
     this.updateComplete.then(() => {
       this.eventActionData?.eventAction.addListeners(
@@ -315,7 +325,7 @@ export abstract class MUElement extends LitElement {
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    MUElement.#muElements.delete(this.muId);
+    MuElement.#muElements.delete(this.muId);
     this.eventActionData?.eventAction.removeListeners(
       this,
       this.eventActionEvents || this.eventActionData.events,

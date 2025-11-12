@@ -1,17 +1,17 @@
 import { type CSSResultGroup, css, html } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import { MUElement } from '../mu-element';
+import { MuElement, type MuElementComponent } from '../mu-element';
 
 export type MuRangeFillComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     for: MuRangeFill['for'];
     type: MuRangeFill['type'];
   };
 };
 
-export class MuRangeFill extends MUElement {
+export class MuRangeFill extends MuElement {
   static override styles: CSSResultGroup = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     #container {
       --range-fill-background-color: var(--mu-range-fill-background-color, var(--mu-color-500));

@@ -6,13 +6,13 @@ import {
 } from '@mustib/utils/browser';
 import { type CSSResultGroup, css, html, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { MUElement } from '../mu-element';
+import { MuElement, type MuElementComponent } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
 import { MuRangeFill } from './mu-range-fill';
 import { MuRangeThumb } from './mu-range-thumb';
 
 export type MuRangeComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     axis: MuRange['axis'];
     min: MuRange['min'];
     max: MuRange['max'];
@@ -67,9 +67,9 @@ type Events = {
   }>;
 };
 
-export class MuRange extends MUElement {
+export class MuRange extends MuElement {
   static override styles?: CSSResultGroup | undefined = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     #container {
       --range-background-color: var(--mu-range-background-color, var(--mu-color-100));
@@ -84,7 +84,7 @@ export class MuRange extends MUElement {
       position: absolute;
       inset: -4px;
       border-radius: inherit;
-      ${MUElement.css.focus}
+      ${MuElement.css.focus}
     }
 
     :host([axis='x']) #container,
@@ -774,7 +774,7 @@ export class MuRange extends MUElement {
     document.addEventListener('pointermove', this._documentPointermoveHandler);
     document.addEventListener('pointerup', this._documentPointerupHandler);
 
-    const thumbEl = MUElement.closestPierce(
+    const thumbEl = MuElement.closestPierce(
       'mu-range-thumb',
       e.target as HTMLElement,
     ) as MuRangeThumb | null;

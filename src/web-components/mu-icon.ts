@@ -1,16 +1,16 @@
 import { type CSSResultGroup, css, html, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { MUElement } from './mu-element';
+import { MuElement, type MuElementComponent } from './mu-element';
 
 export type MuIconComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     name: MuIcon['name'];
   };
 };
 
-export class MuIcon extends MUElement {
+export class MuIcon extends MuElement {
   static override styles?: CSSResultGroup | undefined = [
-    MUElement.cssBase,
+    MuElement.cssBase,
     css`
     :host {
       display: inline-block;

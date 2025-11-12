@@ -1,9 +1,9 @@
 import { type CSSResultGroup, css, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { MUElement } from './mu-element';
+import { MuElement, type MuElementComponent } from './mu-element';
 
 export type MuTransparentComponent = {
-  attributes: {
+  attributes: MuElementComponent['attributes'] & {
     'content-selector': MuTransparent['contentSelector'];
   };
 
@@ -30,7 +30,7 @@ type Events = {
  * Use the `content` property to access the underlying
  * meaningful child element, regardless of the wrapping.
  */
-export class MuTransparent extends MUElement {
+export class MuTransparent extends MuElement {
   static override styles?: CSSResultGroup = css`
     :host {
       display: contents !important;
