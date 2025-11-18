@@ -37,6 +37,13 @@ type RangeFill = {
   linkedThumbs: RangeThumb[];
 };
 
+type ChangeEventSrc =
+  | 'pointerdown'
+  | 'pointerup'
+  | 'pointermove'
+  | 'keydown'
+  | 'insert';
+
 type Events = {
   /**
    * Emitted when pointerdown on a non-thumb element and empty-area attribute has a value of "dispatch".
@@ -50,7 +57,10 @@ type Events = {
   /**
    * Emitted when the value of the range changes.
    */
-  'mu-range-change': CustomEvent<{ data: { name: string; value: number }[] }>;
+  'mu-range-change': CustomEvent<{
+    data: { name: string; value: number }[];
+    src: ChangeEventSrc;
+  }>;
 
   /**
    * Emitted when new thumbs are added after the initial render.
@@ -275,7 +285,7 @@ export class MuRange extends MuElement {
     await this.updateComplete;
     const thumb = this._thumbsElementsMap.get(thumbEl);
     if (!thumb) return;
-    this._setThumbValue(thumb, thumbEl.value);
+    this._setThumbValue({ thumb, value: thumb.value, src: 'insert' });
     this.activeThumb = thumb;
   }
 
@@ -305,6 +315,7 @@ export class MuRange extends MuElement {
 
   dispatchChangeEvent(
     thumbs = this._thumbs as { name: string; value: number }[],
+    src: ChangeEventSrc,
   ) {
     const eventName = 'mu-range-change';
     const data = thumbs.map<Events[typeof eventName]['detail']['data'][number]>(
@@ -315,13 +326,21 @@ export class MuRange extends MuElement {
       new CustomEvent<Events[typeof eventName]['detail']>(eventName, {
         bubbles: true,
         composed: true,
-        detail: { data: data },
+        detail: { data: data, src },
         cancelable: true,
       }),
     );
   }
 
-  _setThumbValue(thumb: RangeThumb, value: number) {
+  _setThumbValue({
+    src,
+    thumb,
+    value,
+  }: {
+    thumb: RangeThumb;
+    value: number;
+    src: ChangeEventSrc;
+  }) {
     const stepValue = this._getThumbStepValue(thumb, value);
 
     if (stepValue === thumb.value) return;
@@ -333,7 +352,7 @@ export class MuRange extends MuElement {
         value: _thumb.name === thumb.name ? stepValue : thumb.value,
       }));
 
-      this.dispatchChangeEvent(sortedThumbs);
+      this.dispatchChangeEvent(sortedThumbs, src);
       return;
     }
 
@@ -342,7 +361,7 @@ export class MuRange extends MuElement {
       thumb.value = stepValue;
       this.sortThumbs();
       thumb.linkedFillElements?.forEach(this.updateRangeFill);
-      this.dispatchChangeEvent();
+      this.dispatchChangeEvent(undefined, src);
     }
   }
 
@@ -730,7 +749,7 @@ export class MuRange extends MuElement {
       e.preventDefault();
       this.focus();
       thumb.element.focused = true;
-      this._setThumbValue(thumb, value);
+      this._setThumbValue({ thumb, value, src: 'keydown' });
     };
 
     const jumpPercentage = 10;
@@ -861,7 +880,7 @@ export class MuRange extends MuElement {
     }
 
     if (candidateThumb) {
-      this._setThumbValue(candidateThumb, value);
+      this._setThumbValue({ thumb: candidateThumb, value, src: 'pointerdown' });
       this.activeThumb = candidateThumb;
     }
   };
@@ -875,13 +894,13 @@ export class MuRange extends MuElement {
     document.removeEventListener('pointerup', this._documentPointerupHandler);
     if (!this.activeThumb) return;
     const { value } = this._getValuesFromEvent(e);
-    this._setThumbValue(this.activeThumb, value);
+    this._setThumbValue({ thumb: this.activeThumb, value, src: 'pointerup' });
   };
 
   _pointermoveHandler = (e: PointerEvent) => {
     if (!this.activeThumb) return;
     const { value } = this._getValuesFromEvent(e);
-    this._setThumbValue(this.activeThumb, value);
+    this._setThumbValue({ thumb: this.activeThumb, value, src: 'pointermove' });
   };
 
   _documentPointermoveHandler = throttle((e: PointerEvent) => {
