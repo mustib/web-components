@@ -8,7 +8,10 @@ import type { MuSelectItemComponent } from './mu-select/mu-select-item';
 import type { MuSelectItemsComponent } from './mu-select/mu-select-items';
 import type { MuSelectLabelComponent } from './mu-select/mu-select-label';
 import type { MuSelectLabelContentComponent } from './mu-select/mu-select-label-content';
-import type { MuSortableComponent, MuSortableItemComponent } from './mu-sortable';
+import type {
+  MuSortableComponent,
+  MuSortableItemComponent,
+} from './mu-sortable';
 import type { MuTransparentComponent } from './mu-transparent';
 import type { MuTriggerComponent } from './mu-trigger';
 
@@ -25,14 +28,14 @@ type ComponentsAttributes = {
   'mu-icon': MuIconComponent['attributes'];
   'mu-transparent': MuTransparentComponent['attributes'];
   'mu-trigger': MuTriggerComponent['attributes'];
-  'mu-sortable': MuSortableComponent['attributes']
-  'mu-sortable-item': MuSortableItemComponent['attributes']
+  'mu-sortable': MuSortableComponent['attributes'];
+  'mu-sortable-item': MuSortableItemComponent['attributes'];
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <>
 export type MuComponentsAttributes<GlobalAttributes = Record<string, any>> = {
   [key in keyof ComponentsAttributes]: Partial<ComponentsAttributes[key]> &
-  GlobalAttributes;
+    GlobalAttributes;
 };
 
 export * from './mu-element';

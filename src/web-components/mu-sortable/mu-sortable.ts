@@ -447,5 +447,5 @@ declare global {
     'mu-sortable': MuSortable;
   }
 
-  interface GlobalEventHandlersEventMap extends Events { }
+  interface GlobalEventHandlersEventMap extends Events {}
 }
