@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@mustib/utils':
-        specifier: 2.7.0
-        version: 2.7.0
+        specifier: 2.8.1
+        version: 2.8.1
       lit:
         specifier: ^3.3.1
         version: 3.3.1
@@ -456,8 +456,8 @@ packages:
   '@lit/reactive-element@2.1.1':
     resolution: {integrity: sha512-N+dm5PAYdQ8e6UlywyyrgI2t++wFGXfHx+dSJ1oBrg6FAxUj40jId++EaRm80MKX5JnlH1sBsyZ5h0bcZKemCg==}
 
-  '@mustib/utils@2.7.0':
-    resolution: {integrity: sha512-85soF5h3nfjth/ihC2e+i9AoQ/6tfcxVq+8d1q7OaMXxSqOOIjvSFpE6tYoWO+F/7VTAgHdKOkIZhroLYoLeNg==}
+  '@mustib/utils@2.8.1':
+    resolution: {integrity: sha512-5oKKcaTdbkZPE1u1QqctUwmMzPQlgNPv5KhnLovNp2w2N5ESdLiK/sJkNSqmo6IgCwpfD+qGcI15hl0GDGy2sg==}
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
@@ -2159,7 +2159,7 @@ snapshots:
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.4.0
 
-  '@mustib/utils@2.7.0': {}
+  '@mustib/utils@2.8.1': {}
 
   '@oslojs/encoding@1.1.0': {}
 

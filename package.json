@@ -15,7 +15,7 @@
     "build:publish": "pnpm build && cd dist && pnpm publish --access public --tag alpha"
   },
   "dependencies": {
-    "@mustib/utils": "2.7.0"
+    "@mustib/utils": "2.8.1"
   },
   "peerDependencies": {
     "lit": "^3.3.1"

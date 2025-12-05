@@ -30,6 +30,9 @@ type Elements = [
   'mu-range-thumb',
   'mu-range-thumb-value',
   'mu-icon',
+  'mu-sortable',
+  'mu-sortable-item',
+  'mu-sortable-trigger',
 ];
 
 let count = 0;

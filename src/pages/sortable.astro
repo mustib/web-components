@@ -1,0 +1,40 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<script>
+  import "@/web-components/mu-sortable";
+</script>
+
+<style>
+  @reference '../styles/global.css';
+
+  mu-sortable-item {
+    @apply flex gap-1 bg-indigo-950 p-2.5 rounded-lg items-center;
+  }
+</style>
+
+<Layout>
+  <mu-sortable class="grid gap-2.5 w-fit">
+    <mu-sortable-item name="1">
+      <mu-sortable-trigger></mu-sortable-trigger>
+      <span>Item 1</span>
+    </mu-sortable-item>
+    <mu-sortable-item name="2">
+      <mu-sortable-trigger></mu-sortable-trigger>
+      <span>Item 2</span>
+    </mu-sortable-item>
+    <mu-sortable-item name="3">
+      <mu-sortable-trigger></mu-sortable-trigger>
+      <span>Item 3</span>
+    </mu-sortable-item>
+    <mu-sortable-item name="4">
+      <mu-sortable-trigger></mu-sortable-trigger>
+      <span>Item 4</span>
+    </mu-sortable-item>
+    <mu-sortable-item name="5">
+      <mu-sortable-trigger></mu-sortable-trigger>
+      <span>Item 5</span>
+    </mu-sortable-item>
+  </mu-sortable>
+</Layout>
