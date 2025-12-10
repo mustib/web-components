@@ -9,10 +9,14 @@
     "build:astro": "astro build",
     "biome": "biome check --write",
     "preview:astro": "astro preview",
-    "prebuild": "biome check --write",
     "build": "rollup -c rollup.config.js",
+    "prebuild": "biome check",
     "prepublishOnly": "node -e \"throw new Error('cannot publish directly from root package use build:publish')\"",
-    "build:publish": "pnpm build && cd dist && pnpm publish --access public --tag alpha"
+    "build:publish": "pnpm build && cd dist && pnpm publish --access public --tag alpha",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,astro}": "biome check --write"
   },
   "dependencies": {
     "@mustib/utils": "2.8.1"
@@ -29,6 +33,8 @@
     "@tailwindcss/vite": "^4.1.12",
     "@types/node": "^24.9.2",
     "astro": "^5.12.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "rollup": "^4.52.5",
     "rollup-plugin-dts": "^6.2.3",
     "tailwindcss": "^4.1.12",
