@@ -46,6 +46,26 @@ type ChangeEventSrc =
 
 type Events = {
   /**
+   * Emitted before change event
+   */
+  'mu-range-start': CustomEvent<{
+    /**
+     * The source of start event
+     */
+    src: 'pointerdown' | 'keydown';
+  }>;
+
+  /**
+   * Emitted at the end of change event
+   */
+  'mu-range-end': CustomEvent<{
+    /**
+     * The source of end event
+     */
+    src: 'pointerup' | 'keyup';
+  }>;
+
+  /**
    * Emitted when pointerdown on a non-thumb element and empty-area attribute has a value of "dispatch".
    *
    * This can be used to dynamically add thumbs.
@@ -59,6 +79,10 @@ type Events = {
    */
   'mu-range-change': CustomEvent<{
     data: { name: string; value: number }[];
+
+    /**
+     * The source of change event
+     */
     src: ChangeEventSrc;
   }>;
 
@@ -202,7 +226,22 @@ export class MuRange extends MuElement {
   /**
    * this is used to prevent focus listener from running when the pointer is down otherwise active thumb will gain focus when the pointer is down
    */
-  protected _isPointerDown = false;
+  protected get _isPointerDownStart() {
+    return this._startEvent === 'pointerdown';
+  }
+
+  protected get _isKeyDownStart() {
+    return this._startEvent === 'keydown';
+  }
+
+  /**
+   * the event that started change event
+   */
+  protected _startEvent?: 'pointerdown' | 'keydown';
+
+  protected get _hasStarted(): boolean {
+    return this._startEvent !== undefined;
+  }
 
   set activeThumb(thumb: RangeThumb | undefined) {
     if (
@@ -235,7 +274,7 @@ export class MuRange extends MuElement {
 
       this.addEventListener('focus', (e) => {
         if (
-          this._isPointerDown ||
+          this._isPointerDownStart ||
           this.disabled ||
           this.readonly ||
           e.defaultPrevented
@@ -263,6 +302,59 @@ export class MuRange extends MuElement {
       this._documentPointermoveHandler,
     );
     document.removeEventListener('pointerup', this._documentPointerupHandler);
+    document.removeEventListener('keyup', this._documentKeyupHandler);
+  }
+
+  /**
+   * start thumb move
+   */
+  protected _start(data: {
+    activeThumb?: RangeThumb;
+    src: 'pointerdown' | 'keydown';
+  }) {
+    if (this._hasStarted) return;
+
+    this._activeThumb = data.activeThumb;
+
+    if (!data.activeThumb) return;
+
+    this._startEvent = data.src;
+
+    this.dispatchStartEvent({ src: data.src });
+
+    if (data.src === 'pointerdown') {
+      document.addEventListener(
+        'pointermove',
+        this._documentPointermoveHandler,
+      );
+      document.addEventListener('pointerup', this._documentPointerupHandler);
+    }
+
+    if (data.src === 'keydown') {
+      document.addEventListener('keyup', this._documentKeyupHandler);
+    }
+  }
+
+  /**
+   * end thumb move
+   */
+  protected _end() {
+    document.removeEventListener(
+      'pointermove',
+      this._documentPointermoveHandler,
+    );
+    document.removeEventListener('pointerup', this._documentPointerupHandler);
+    document.removeEventListener('keyup', this._documentKeyupHandler);
+
+    if (this._startEvent === 'pointerdown') {
+      this.dispatchEndEvent({ src: 'pointerup' });
+    }
+
+    if (this._startEvent === 'keydown') {
+      this.dispatchEndEvent({ src: 'keyup' });
+    }
+
+    this._startEvent = undefined;
   }
 
   /**
@@ -311,6 +403,30 @@ export class MuRange extends MuElement {
     this.focus();
     navigationThumb.element.focused = true;
     return true;
+  }
+
+  dispatchStartEvent(data: { src: Events['mu-range-start']['detail']['src'] }) {
+    const eventName = 'mu-range-start';
+    this.dispatchEvent(
+      new CustomEvent<Events[typeof eventName]['detail']>(eventName, {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        detail: data,
+      }),
+    );
+  }
+
+  dispatchEndEvent(data: { src: Events['mu-range-end']['detail']['src'] }) {
+    const eventName = 'mu-range-end';
+    this.dispatchEvent(
+      new CustomEvent<Events[typeof eventName]['detail']>(eventName, {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        detail: data,
+      }),
+    );
   }
 
   dispatchChangeEvent(
@@ -720,6 +836,7 @@ export class MuRange extends MuElement {
     const thumb = this.activeThumb;
     if (this.disabled || this.readonly || !thumb || e.defaultPrevented) return;
 
+    this.dispatchStartEvent({ src: 'keydown' });
     let increaseKey = 'ArrowRight';
     let decreaseKey = 'ArrowLeft';
 
@@ -746,7 +863,14 @@ export class MuRange extends MuElement {
     }
 
     const setValue = (value: number) => {
+      if (this._hasStarted && !this._isKeyDownStart) return;
       e.preventDefault();
+      if (!this._isKeyDownStart) {
+        this._start({
+          activeThumb: thumb,
+          src: 'keydown',
+        });
+      }
       this.focus();
       thumb.element.focused = true;
       this._setThumbValue({ thumb, value, src: 'keydown' });
@@ -786,12 +910,18 @@ export class MuRange extends MuElement {
     }
   };
 
-  _pointerdownHandler = (e: PointerEvent) => {
-    if (this.disabled || this.readonly || e.defaultPrevented) return;
+  _documentKeyupHandler = () => {
+    this._end();
+  };
 
-    this._isPointerDown = true;
-    document.addEventListener('pointermove', this._documentPointermoveHandler);
-    document.addEventListener('pointerup', this._documentPointerupHandler);
+  _pointerdownHandler = (e: PointerEvent) => {
+    if (
+      this.disabled ||
+      this.readonly ||
+      e.defaultPrevented ||
+      this._hasStarted
+    )
+      return;
 
     const thumbEl = MuElement.closestPierce(
       'mu-range-thumb',
@@ -806,7 +936,10 @@ export class MuRange extends MuElement {
 
     if (thumbEl && !thumbEl.transparent) {
       const activeThumb = this._thumbsElementsMap.get(thumbEl);
-      this.activeThumb = activeThumb;
+      this._start({
+        activeThumb,
+        src: 'pointerdown',
+      });
       return;
     }
 
@@ -880,21 +1013,21 @@ export class MuRange extends MuElement {
     }
 
     if (candidateThumb) {
+      this._start({
+        activeThumb: candidateThumb,
+        src: 'pointerdown',
+      });
       this._setThumbValue({ thumb: candidateThumb, value, src: 'pointerdown' });
-      this.activeThumb = candidateThumb;
     }
   };
 
   _documentPointerupHandler = (e: PointerEvent) => {
-    this._isPointerDown = false;
-    document.removeEventListener(
-      'pointermove',
-      this._documentPointermoveHandler,
-    );
-    document.removeEventListener('pointerup', this._documentPointerupHandler);
-    if (!this.activeThumb) return;
-    const { value } = this._getValuesFromEvent(e);
-    this._setThumbValue({ thumb: this.activeThumb, value, src: 'pointerup' });
+    if (this.activeThumb) {
+      const { value } = this._getValuesFromEvent(e);
+      this._setThumbValue({ thumb: this.activeThumb, value, src: 'pointerup' });
+    }
+
+    this._end();
   };
 
   _pointermoveHandler = (e: PointerEvent) => {
