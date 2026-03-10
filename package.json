@@ -3,7 +3,7 @@
   "type": "module",
   "description": "A customizable web-components library with lit",
   "private": false,
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.7",
   "scripts": {
     "dev": "astro dev",
     "build:astro": "astro build",
@@ -19,7 +19,7 @@
     "*.{js,ts,astro}": "biome check --write"
   },
   "dependencies": {
-    "@mustib/utils": "2.8.1"
+    "@mustib/utils": "2.9.0"
   },
   "peerDependencies": {
     "lit": "^3.3.1"

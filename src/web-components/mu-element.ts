@@ -33,6 +33,8 @@ type Elements = [
   'mu-sortable',
   'mu-sortable-item',
   'mu-sortable-trigger',
+  'mu-toast',
+  'mu-toast-item',
 ];
 
 let count = 0;

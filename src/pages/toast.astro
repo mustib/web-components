@@ -1,0 +1,436 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout>
+  <fieldset class="border p-2.5 rounded-xl">
+    <legend class="text-center px-2.5">Toast Form</legend>
+    <form id="toast-form" class="grid gap-2.5">
+      <label>
+        <p>
+          Message: <input
+            required
+            name="message"
+            placeholder="message"
+            value="Toast Message"
+          />
+        </p>
+      </label>
+
+      <label>
+        <p>Label: <input name="label" placeholder="label" value="Info:" /></p>
+      </label>
+
+      <label>
+        <p>
+          Duration: <input
+            name="duration"
+            type="number"
+            required
+            placeholder="duration"
+          />
+        </p>
+      </label>
+
+      <label>
+        <p>
+          Enter Animation Duration: <input
+            name="enter-animation-duration"
+            type="number"
+            required
+            placeholder="enter-animation-duration"
+          />
+        </p>
+      </label>
+
+      <label>
+        <p>
+          Leave Animation Duration: <input
+            name="leave-animation-duration"
+            type="number"
+            required
+            placeholder="leave-animation-duration"
+          />
+        </p>
+      </label>
+
+      <label>
+        <p>Close Btn: <input name="close-btn" checked type="checkbox" /></p>
+      </label>
+
+      <label>
+        <p>
+          Action Label: <input
+            name="action-label"
+            placeholder="action-label"
+            value="Undo"
+          />
+        </p>
+      </label>
+      <label>
+        <p>
+          Render Wait Time: <input
+            type="number"
+            name="render-wait-time"
+            placeholder="render-wait-time"
+            value=""
+          />
+        </p>
+      </label>
+
+      <mu-select>
+        <mu-select-label
+          legend="Interacting Behavior"
+          label="Interacting Behavior"></mu-select-label>
+        <mu-select-items
+          value="pause-progress"
+          id="interacting-behavior-select-items"
+        >
+          <mu-select-item>pause-progress</mu-select-item>
+          <mu-select-item>reset-progress</mu-select-item>
+          <mu-select-item>nothing</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+
+      <mu-select>
+        <mu-select-label legend="Icon Name" label="Icon Name"></mu-select-label>
+        <mu-select-items value="info" id="icon-name-select-items">
+          <mu-select-item>checkMark</mu-select-item>
+          <mu-select-item>error</mu-select-item>
+          <mu-select-item>info</mu-select-item>
+          <mu-select-item>warning</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+
+      <mu-select>
+        <mu-select-label legend="Color Hue" label="Color Hue"></mu-select-label>
+        <mu-select-items value="info" id="color-hue-select-items">
+          <mu-select-item>success</mu-select-item>
+          <mu-select-item>error</mu-select-item>
+          <mu-select-item>warning</mu-select-item>
+          <mu-select-item>info</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+
+      <mu-select>
+        <mu-select-label legend="Direction" label="Direction"></mu-select-label>
+        <mu-select-items id="direction-select-items">
+          <mu-select-item>rtl</mu-select-item>
+          <mu-select-item>ltr</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+
+      <mu-select>
+        <mu-select-label legend="Priority" label="Priority"></mu-select-label>
+        <mu-select-items id="priority-select-items">
+          <mu-select-item>immediate</mu-select-item>
+          <mu-select-item>important</mu-select-item>
+          <mu-select-item>normal</mu-select-item>
+        </mu-select-items>
+      </mu-select>
+
+      <button class="border p-2.5 ml-auto rounded-xl sticky bottom-2.5"
+        >Show Toast</button
+      >
+    </form>
+  </fieldset>
+
+  <!-- Global Options -->
+  <fieldset class="border rounded-xl p-2.5 grid gap-2.5">
+    <legend class="text-center p-2.5">Global Options</legend>
+
+    <label>Stack Toasts: <input type="checkbox" name="stack-toasts" /> </label>
+
+    <label
+      >Visible Toasts Count: <input type="number" name="visible-toasts-count" />
+    </label>
+
+    <mu-select>
+      <mu-select-label legend="Position" label="Position"></mu-select-label>
+      <mu-select-items id="position-select-items">
+        <mu-select-item>top-start</mu-select-item>
+        <mu-select-item>top-center</mu-select-item>
+        <mu-select-item>top-end</mu-select-item>
+        <mu-select-item>bottom-start</mu-select-item>
+        <mu-select-item>bottom-center</mu-select-item>
+        <mu-select-item>bottom-end</mu-select-item>
+      </mu-select-items>
+    </mu-select>
+  </fieldset>
+
+  <dialog
+    id="modal"
+    class="open:grid w-full h-full m-auto text-white bg-indigo-900 rounded-xl backdrop:backdrop-blur-2xl place-items-center place-content-center gap-2.5 p-2.5"
+  >
+    <h1 class="text-2xl font-bold">Modal Content</h1>
+    <button
+      class="border p-2.5 rounded-xl"
+      onclick="this.closest('dialog').close()"
+    >
+      Close Modal
+    </button>
+  </dialog>
+
+  <mu-toast auto-re-parent id="mu-toast">
+    <div
+      slot="before"
+      class="grid gap-2.5 ml-auto *:bg-slate-900 *:rounded-xl *:border *:p-2.5"
+    >
+      <button id="clear-all-toasts-btn" type="button">Clear All</button>
+      <button id="clear-all-visible-toasts-btn" type="button"
+        >Clear Visible</button
+      >
+    </div>
+  </mu-toast>
+
+  <div
+    class="bg-indigo-900 rounded-xl grid content-center justify-center font-bold"
+    id="fullscreen"
+  >
+    <h1>Fullscreen Content</h1>
+    <button id="exit-fullscreen-btn" class="border p-2.5 rounded-xl">
+      Exit Fullscreen
+    </button>
+  </div>
+
+  <div
+    class="*:border *:p-2.5 *:rounded-xl ml-auto *:bg-slate-900 flex gap-2.5 place-content-center place-items-center flex-wrap"
+  >
+    <button id="show-modal-btn">Show Modal</button>
+    <button id="enter-fullscreen-btn">Enter Fullscreen</button>
+  </div>
+</Layout>
+
+<style>
+  #fullscreen:not(:fullscreen) {
+    display: none;
+  }
+
+  mu-select {
+    width: fit-content;
+  }
+
+  mu-toast [slot] {
+    display: none;
+  }
+
+  mu-toast:not([empty]) [slot] {
+    display: initial;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  mu-select-item {
+    overflow-wrap: anywhere;
+  }
+
+  mu-select-label::part(icon-remove-all) {
+    display: none;
+  }
+</style>
+
+<script>
+  import "@/web-components/mu-toast";
+  import "@/web-components/mu-select";
+  import type { MuToast } from "@/web-components/mu-toast";
+  import type { MuSelectItems } from "@/web-components/mu-select";
+
+  const toastForm = document.getElementById("toast-form") as HTMLFormElement;
+
+  const stackToastsCheckbox = document.querySelector(
+    '[name="stack-toasts"]',
+  ) as HTMLInputElement;
+
+  const visibleToastsCountInput = document.querySelector(
+    '[name="visible-toasts-count"]',
+  ) as HTMLInputElement;
+
+  const controller = (document.getElementById("mu-toast") as MuToast)
+    .controller;
+
+  const positionSelectItems = document.getElementById(
+    "position-select-items",
+  ) as MuSelectItems;
+
+  const directionSelectItems = document.getElementById(
+    "direction-select-items",
+  ) as MuSelectItems;
+
+  const iconNameSelectItems = document.getElementById(
+    "icon-name-select-items",
+  ) as MuSelectItems;
+
+  const interactingBehaviorSelectItems = document.getElementById(
+    "interacting-behavior-select-items",
+  ) as MuSelectItems;
+
+  const colorHueSelectItems = document.getElementById(
+    "color-hue-select-items",
+  ) as MuSelectItems;
+
+  const prioritySelectItems = document.getElementById(
+    "priority-select-items",
+  ) as MuSelectItems;
+
+  const modal = document.getElementById("modal") as HTMLDialogElement;
+  const fullscreen = document.getElementById("fullscreen") as HTMLDivElement;
+
+  const clearAllToastsBtn = document.getElementById(
+    "clear-all-toasts-btn",
+  ) as HTMLButtonElement;
+
+  const clearAllVisibleToastsBtn = document.getElementById(
+    "clear-all-visible-toasts-btn",
+  ) as HTMLButtonElement;
+
+  const exitFullscreenBtn = document.getElementById(
+    "exit-fullscreen-btn",
+  ) as HTMLButtonElement;
+
+  const enterFullscreenBtn = document.getElementById(
+    "enter-fullscreen-btn",
+  ) as HTMLButtonElement;
+
+  const showModalBtn = document.getElementById(
+    "show-modal-btn",
+  ) as HTMLButtonElement;
+
+  fullscreen.addEventListener("fullscreenchange", () => {
+    if (document.fullscreenElement) {
+      controller.success("Fullscreen Entered Successfully");
+    } else {
+      controller.success("Fullscreen Closed Successfully");
+    }
+  });
+
+  clearAllToastsBtn.addEventListener("click", () => {
+    controller.gracefulRemoveAll();
+  });
+
+  clearAllVisibleToastsBtn.addEventListener("click", () => {
+    controller.gracefulRemoveVisible();
+  });
+
+  enterFullscreenBtn.addEventListener("click", () => {
+    fullscreen.requestFullscreen();
+  });
+
+  exitFullscreenBtn.addEventListener("click", () => {
+    document.exitFullscreen();
+  });
+
+  showModalBtn.addEventListener("click", () => {
+    modal.showModal();
+    controller.success("Modal Shown Successfully");
+  });
+
+  modal.addEventListener("close", () => {
+    controller.success("Modal Closed Successfully");
+  });
+
+  Reflect.set(window, "muToastController", controller);
+  console.log(
+    "muToastController is set as a property on the window",
+    controller,
+  );
+
+  positionSelectItems.value = [controller.position];
+
+  prioritySelectItems.value = ["normal"];
+
+  directionSelectItems.value = [controller.defaultDirection];
+
+  visibleToastsCountInput.value = controller.maxVisibleToastsCount.toString(10);
+
+  controller.popover();
+
+  (document.querySelector('[name="duration"]') as any).value =
+    controller.defaultDuration;
+
+  (document.querySelector('[name="enter-animation-duration"]') as any).value =
+    controller.defaultEnterAnimationDuration;
+
+  (document.querySelector('[name="leave-animation-duration"]') as any).value =
+    controller.defaultLeaveAnimationDuration;
+
+  stackToastsCheckbox.checked = controller.stackToasts;
+  (document.querySelector('[name="visible-toasts-count"]') as any).value =
+    controller.maxVisibleToastsCount;
+
+  stackToastsCheckbox.addEventListener("change", () => {
+    controller.stackToasts = stackToastsCheckbox.checked;
+  });
+
+  visibleToastsCountInput.addEventListener("change", () => {
+    controller.maxVisibleToastsCount = +visibleToastsCountInput.value;
+  });
+
+  positionSelectItems.addEventListener("mu-select-items-change", (e) => {
+    if (e.detail.values.length === 0) return;
+    controller.position = e.detail.values[0] as any;
+    positionSelectItems.value = [e.detail.values[0]!];
+  });
+
+  directionSelectItems.addEventListener("mu-select-items-change", (e) => {
+    if (e.detail.values.length === 0) return;
+    directionSelectItems.value = [e.detail.values[0]!];
+  });
+
+  iconNameSelectItems.addEventListener("mu-select-items-change", (e) => {
+    if (e.detail.values.length === 0) return;
+    iconNameSelectItems.value = [e.detail.values[0]!];
+  });
+
+  interactingBehaviorSelectItems.addEventListener(
+    "mu-select-items-change",
+    (e) => {
+      if (e.detail.values.length === 0) return;
+      interactingBehaviorSelectItems.value = [e.detail.values[0]!];
+    },
+  );
+
+  colorHueSelectItems.addEventListener("mu-select-items-change", (e) => {
+    if (e.detail.values.length === 0) return;
+    colorHueSelectItems.value = [e.detail.values[0]!];
+  });
+
+  prioritySelectItems.addEventListener("mu-select-items-change", (e) => {
+    if (e.detail.values.length === 0) return;
+    prioritySelectItems.value = [e.detail.values[0]!];
+  });
+
+  toastForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(toastForm);
+    controller.create({
+      message: formData.get("message") as any,
+      label: formData.get("label") as any,
+      duration: +(formData.get("duration") as any),
+      enterAnimationDuration: +(formData.get(
+        "enter-animation-duration",
+      ) as any),
+      leaveAnimationDuration: +(formData.get(
+        "leave-animation-duration",
+      ) as any),
+      colorHue: (controller.colorHue as any)[
+        colorHueSelectItems.value![0] as any
+      ],
+      direction: directionSelectItems.value![0] as any,
+      labelIcon: iconNameSelectItems.value![0] as any,
+      interactingBehavior: interactingBehaviorSelectItems.value![0] as any,
+      closeBtn: !!formData.get("close-btn") as any,
+      maxRenderWaitTime: +(formData.get("render-wait-time") as any),
+      priority: prioritySelectItems.value?.[0] as any,
+      action: formData.get("action-label")
+        ? {
+            label: formData.get("action-label"),
+            onClick(toast) {
+              toast.gracefulRemove();
+            },
+          }
+        : (undefined as any),
+    });
+  });
+</script>

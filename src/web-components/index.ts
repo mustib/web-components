@@ -12,6 +12,8 @@ import type {
   MuSortableComponent,
   MuSortableItemComponent,
 } from './mu-sortable';
+import type { MuToastComponent } from './mu-toast/mu-toast';
+import type { MuToastItemComponent } from './mu-toast/mu-toast-item';
 import type { MuTransparentComponent } from './mu-transparent';
 import type { MuTriggerComponent } from './mu-trigger';
 
@@ -30,6 +32,8 @@ type ComponentsAttributes = {
   'mu-trigger': MuTriggerComponent['attributes'];
   'mu-sortable': MuSortableComponent['attributes'];
   'mu-sortable-item': MuSortableItemComponent['attributes'];
+  'mu-toast': MuToastComponent['attributes'];
+  'mu-toast-item': MuToastItemComponent['attributes'];
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <>
@@ -42,5 +46,7 @@ export * from './mu-element';
 export * from './mu-icon';
 export * from './mu-range';
 export * from './mu-select';
+export * from './mu-sortable';
+export * from './mu-toast';
 export * from './mu-transparent';
 export * from './mu-trigger';
