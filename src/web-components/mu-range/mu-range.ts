@@ -727,8 +727,18 @@ export class MuRange extends MuElement {
       };
 
       thumbs.forEach((thumb) => {
-        if (thumb.linkedFillElements) thumb.linkedFillElements.push(rangeFill);
-        else thumb.linkedFillElements = [rangeFill];
+        if (thumb.linkedFillElements) {
+          const previousLinkedFillIndex = thumb.linkedFillElements.findIndex(
+            (linkedThumb) => linkedThumb.element === rangeFill.element,
+          );
+
+          const index =
+            previousLinkedFillIndex === -1
+              ? thumb.linkedFillElements.length
+              : previousLinkedFillIndex;
+
+          thumb.linkedFillElements[index] = rangeFill;
+        } else thumb.linkedFillElements = [rangeFill];
         this.updateRangeFill(rangeFill);
       });
     });
