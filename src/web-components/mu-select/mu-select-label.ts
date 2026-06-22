@@ -5,9 +5,8 @@ import {
   nothing,
   type PropertyValues,
 } from 'lit';
-import { MuElement, type MuElementComponent } from '../mu-element';
-import '../mu-trigger';
 import { property, state } from 'lit/decorators.js';
+import { MuElement, type MuElementComponent } from '../mu-element';
 import { MuTransparent } from '../mu-transparent';
 import { MuSelectLabelContent } from './mu-select-label-content';
 import '../mu-icon';
