@@ -1,5 +1,6 @@
 allowBuilds:
   esbuild: true
   sharp: true
+minimumReleaseAge: 4320 # 3days
 overrides:
   astro@<6.1.6: '>=6.1.6'
